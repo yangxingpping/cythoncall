@@ -32,21 +32,21 @@ paths:
 	@echo "LIBS=$(LIBS)"
 	@echo "SYSLIBS=$(SYSLIBS)"
 
-embedded: embedded.o
-	$(LINKCC) -o $@ $^ -L$(LIBDIR1) -L$(LIBDIR2) -l$(PYLIB) $(LIBS) $(SYSLIBS) $(LINKFORSHARED)
+embedded: embedded.o embedded_main.o
+	$(LINKCC)  -o $@ $^ -L$(LIBDIR1) -L$(LIBDIR2) -l$(PYLIB) $(LIBS) $(SYSLIBS) $(LINKFORSHARED)
 
 embedded.o: embedded.c
-	$(CC) -c $^ -I$(INCDIR) -I$(PLATINCDIR)
+	$(CC) -g -c $^ -I$(INCDIR) -I$(PLATINCDIR)
 
-CYTHON := cython.py
-embedded.c: embedded.pyx
-	@$(PYTHON) $(CYTHON) --embed embedded.pyx
+embedded_main.o: embedded_main.c
+	$(CC) -g -c $^ -I$(INCDIR) -I$(PLATINCDIR)
+
 
 all: embedded
 
 clean:
 	@echo Cleaning Demos/embed
-	@rm -f *~ *.o *.so core core.* embedded.c embedded test.output
+	@rm -f *~ *.o *.so core core.*  embedded test.output
 
 test: clean all
 	LD_LIBRARY_PATH=$(LIBDIR1):$$LD_LIBRARY_PATH ./embedded > test.output
