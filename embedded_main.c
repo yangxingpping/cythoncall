@@ -40,6 +40,11 @@ int main(int argc, wchar_t** argv)
     say_hello_from_python(&p);
     printf("%d\n", p.age);
 
+    Movice mov[10];
+    memset(mov, 0, sizeof(mov));
+
+    parse_xml_data("movies.xml", mov, 10);
+
 #if PY_VERSION_HEX < 0x03060000
     Py_Finalize();
 #else
