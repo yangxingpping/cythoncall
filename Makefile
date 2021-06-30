@@ -46,7 +46,7 @@ all: embedded
 
 clean:
 	@echo Cleaning Demos/embed
-	@rm -f *~ *.o *.so core core.* *.c embedded test.output
+	@rm -f *~ *.o *.so core core.* embedded.c embedded test.output
 
 test: clean all
 	LD_LIBRARY_PATH=$(LIBDIR1):$$LD_LIBRARY_PATH ./embedded > test.output
