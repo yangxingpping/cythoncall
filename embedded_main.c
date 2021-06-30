@@ -1,7 +1,7 @@
 /* None */
 #include "embedded.h"
 
-
+char chname[] = "hello.world yy";
 
 int main(int argc, char** argv) {
     /* 754 requires that FP exceptions run in "no stop" mode by default,
@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
       Py_XDECREF(m);
     }
 
-    say_hello_from_python();
+    say_hello_from_python(chname);
 
 #if PY_VERSION_HEX < 0x03060000
     Py_Finalize();
