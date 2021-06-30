@@ -43,6 +43,9 @@ static int __Pyx_main(int argc, wchar_t **argv) {
       }
       Py_XDECREF(m);
     }
+
+    say_hello_from_python();
+
 #if PY_VERSION_HEX < 0x03060000
     Py_Finalize();
 #else
