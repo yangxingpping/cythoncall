@@ -11,6 +11,10 @@ import xml.sax
 from xml.dom.minidom import parse
 import xml.dom.minidom
 
+from libc.stdlib cimport malloc 
+from libc.string cimport memcpy 
+from libc.stdlib cimport atof 
+
 TEXT_TO_SAY = 'Hello from Python!'
 
 cdef extern from "h.h":
@@ -53,9 +57,12 @@ cdef public int parse_xml_data(char* filex , (Movice*)p, int allocSize):
     
     movies = collection.getElementsByTagName("movie")
     
+    cdef int i = 0;
     for movie in movies:
         if movie.hasAttribute("title"):
-            type = movie.getElementsByTagName('type')[0]
+            typex = movie.getElementsByTagName('type')[0]
+            print(typex.childNodes[0].data.encode(encoding));
+            #memcpy(p[i].title.encode(encoding), (char*)(typex.childNodes[0].data.encode(encoding)), len(typex.childNodes[0].data.encode(encoding)));
             #print "Type: %s" % type.childNodes[0].data
             format = movie.getElementsByTagName('format')[0]
             #print "Format: %s" % format.childNodes[0].data
@@ -63,3 +70,4 @@ cdef public int parse_xml_data(char* filex , (Movice*)p, int allocSize):
             #print "Rating: %s" % rating.childNodes[0].data
             description = movie.getElementsByTagName('description')[0]
             #print "Description: %s" % description.childNodes[0].data
+            ++i;
