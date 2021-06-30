@@ -4,15 +4,19 @@
 #include "embedded.h"
 
 
-
-int main(int argc, char** argv) {
+#if PY_MAJOR_VERSION < 3
+int main(int argc, char** argv) 
+#else
+int main(int argc, wchar_t** argv) 
+#endif
+{
     
     Person p;
     p.name = "alqaz";
     p.age = 12;
 
     if (argc && argv)
-        Py_SetProgramName((wchar_t*)argv[0]);
+        Py_SetProgramName(argv[0]);
     #if PY_MAJOR_VERSION < 3
     if (PyImport_AppendInittab("embedded", initembedded) < 0) return 1;
     #else
