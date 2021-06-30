@@ -13,9 +13,7 @@ cdef extern from "h.h":
         char* name;
         int age;
 
-cdef public int say_hello_from_python((void*) p) except -1:
+cdef public int say_hello_from_python((Person*) p) except -1:
     print(TEXT_TO_SAY)
-    cdef Person* px = <Person*>p;
-    print(px.name);
-    px.age += 1;
+    p.age += 1;
     return 0
