@@ -1,17 +1,18 @@
 /* None */
+#include "h.h"
+
 #include "embedded.h"
 
-char chname[] = "hello.world yy";
+
 
 int main(int argc, char** argv) {
-    /* 754 requires that FP exceptions run in "no stop" mode by default,
-     * and until C vendors implement C99's ways to control FP exceptions,
-     * Python requires non-stop mode.  Alas, some platforms enable FP
-     * exceptions by default.  Here we disable them.
-     */
+    
+    Person p;
+    p.name = "alqaz";
+    p.age = 12;
 
     if (argc && argv)
-        Py_SetProgramName(argv[0]);
+        Py_SetProgramName((wchar_t*)argv[0]);
     #if PY_MAJOR_VERSION < 3
     if (PyImport_AppendInittab("embedded", initembedded) < 0) return 1;
     #else
@@ -31,8 +32,9 @@ int main(int argc, char** argv) {
       }
       Py_XDECREF(m);
     }
-
-    say_hello_from_python(chname);
+    printf("%d\n", p.age);
+    say_hello_from_python(&p);
+    printf("%d\n", p.age);
 
 #if PY_VERSION_HEX < 0x03060000
     Py_Finalize();

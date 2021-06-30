@@ -8,7 +8,14 @@
 
 TEXT_TO_SAY = 'Hello from Python!'
 
-cdef public int say_hello_from_python(char* pt) except -1:
+cdef extern from "h.h":
+    ctypedef struct Person:
+        char* name;
+        int age;
+
+cdef public int say_hello_from_python((void*) p) except -1:
     print(TEXT_TO_SAY)
-    print( pt);
+    cdef Person* px = <Person*>p;
+    print(px.name);
+    px.age += 1;
     return 0
